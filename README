@@ -1,0 +1,50 @@
+This folder contains all the scripts necessary to combine various standalone features into a single output, using SVM learning on the SemEval-2012 Lexical Simplificaton datasets. The 'pipeline.py' script streamlines this process by making calls to the various scripts and also testing the performance of the model on the SemEval-2012 Lexical Simplificaton Test set.
+
+
+Files and Folders:
+1) pipeline.py : the parent script which is responsible for various calls to the other scripts, and building and testing of a lexical simplification model
+2) svm-format-learn.py & svm-format-classify.py : the scripts that takes care of generating files that are correctly formatted for the SVM-light package
+3) read-svm-rank.py : a script that converts SVM-light output to rankings in the shared task specification
+4) scorer.py : the scoring script
+5) baseline/ : contains 2 baseline scripts as examples of how features may be coded
+6) feature-files/ : the folder that holds all the feature output files in trial and test pairs
+7) semeval-datasets/ : folder containing the datasets released to participants of the shared task
+
+
+Included Features:
+a-ngram : adaptive n-gram model
+bow : bag-of-words model
+f-psycho : psycholinguistic features with frequency back-off
+gold : the gold standard
+lsa : latent semantic analysis
+nc : no-change baseline
+pmi : point-wise mutual information
+psycho : psycholinguistic features
+rand : random ranking baseline
+s-ngram : simple n-gram model
+sfreq : simple frequency baseline
+split : split and reorder model
+syll : syllable count
+w-length : word-length based ranking
+
+
+Usage:
+- First binaries of the SVM-light package must be created. Either directly download them from http://svmlight.joachims.org/ , or download the source and compile yourself. Move the resulting executables 'svm_learn' and 'svm_classify' to the SimpLex parent directory. Ensure that it is at the same level as 1), 2), 3) and 4) - or the pipeline will not work.
+- Call the pipeline script as follows:
+$ python pipeline.py -g <goldFileStub> -f <feature1Stub,feature2Stub,etc.> [-c <c-param-value>] [-m <gamma-value>] [-h]
+	-g or --gold to specify path to gold filename stub
+	-f or --features to specify path to feature filename stubs* (paths are separated by commas)
+	-c or --c-param to specify the c-parameter used in SVM training
+	-m or --gamma to specify the gamma parameter used in the rbf kernel of the SVM
+	-h or --help (this message is displayed)
+*E.g. to reference the feature 'nc' include 'feature-files/nc'. Note that only the STUB of the filename is required; inclusion of the '-test' and '-trial' suffix is done at run-time.
+
+
+Including your own Features:
+Feel free to code and generate your own feature files, only keeping in mind that they need to adhere to the format specifications of the shared task (see http://www.cs.york.ac.uk/semeval-2012/task1/) ... Also note the naming convention of the feature files, using 'STUB-trial' and 'STUB-test' whenever you create any feature.
+To get started (and if you're familiar with Python :P) take a look at the baseline scripts.
+
+
+The program is free for scientific use. Please contact me at sjauhar@cs.cmu.edu, if you are planning to use the software for commercial purposes. The software must not be further distributed without prior permission of the author. If you use SimpLex in your scientific work, please cite as:
+
+Sujay Kumar Jauhar and Lucia Specia. 2012. UOWSHEF: SimpLex - Lexical Simplicity Ranking based on Contextual and Psycholinguistic Features. In English Lexical Simpliﬁcation. Proceedings of the 6th International Workshop on Semantic Evaluation (SemEval 2012), Montreal, Canada.

@@ -1,0 +1,8 @@
+This folder contains scripts for the two baselines* of the shared task. Each baseline script is in its own folder along with the source data files. The scripts are called in the following fashion:
+
+python <script-name>.py -i <input-file> -o <output-file>
+
+where <input-file> contains the words to be ranked. Each line of the file corresponds to the candidates for 1 context.
+<source-file> contains the contexts themselves, and is aligned to the <input-file> in a 1-to-1 manner.
+
+*A third baseline was included in the framework of the shared task but is resource heavy (it relies on querying the Google Web 1T corpus) and has thus not been included.
